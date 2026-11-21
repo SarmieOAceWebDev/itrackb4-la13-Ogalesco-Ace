@@ -119,3 +119,20 @@ Q1 - the resource controllers index handles the listing of records and usually p
 Q2 - the pagination links did not contain the search term. Because of this, the controller received no search value when moving to the next page. I fixed it using withQueryString().
 
 Q3 - the misspelled sort value silently falls back to the default instead of showing an error. My allowed list makes sure only code and units can be used for sorting.
+
+
+
+LA14
+(Answers)
+f1. the Authentication identifies who is using my Subject Management System through the registration and login. Authorisation on the otherhand is the thing we will learn next meeting, it determines what an authenticated user is allowed to do.
+
+f2. The session()->regenerate() creates a new session ID after the login to prevent the session fixation. Skipping it can allow someone with an old session ID to access the authenticated session.
+
+f3.well using the same error message prevents the strangers from knowing whether an email is registered in the system.
+
+f4. i kept the index and show the public so visitors can view the subject list and subject details without logging in. However,the create, edit, update, and destroy require authentication because they involve adding, changing, or deleting subject records which is only previllage by the registered user.
+
+f5. well, Hiding the Add, Edit, and Delete buttons only prevents the  guests from seeing those options on the page.a stranger can still manually type the URL, so the auth middleware is what actually blocks access to those protected actions.
+
+f6.well the Laravel's auth middleware looks for a route named login when an unauthenticated visitor tries to access a protected page. if I rename it to signin, Laravel cannot find the expected route and displays a Route login not defined error.
+

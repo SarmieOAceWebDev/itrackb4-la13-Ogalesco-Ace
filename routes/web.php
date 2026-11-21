@@ -19,8 +19,11 @@ Route::get('/subjects/filter/{value?}', function ($value = null) {
     ]);
 });
 
+
+
 Route::resource('subjects', SubjectController::class)
-    ->middleware(['create', 'store', 'edit', 'update', 'destroy'],'auth');
+    ->middlewareFor(['create', 'store', 'edit', 'update', 'destroy'], 'auth');
+
 
 Route::get('/register',  [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');

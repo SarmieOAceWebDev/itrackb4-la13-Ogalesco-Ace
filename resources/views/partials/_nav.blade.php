@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('home') }}">Subject Management System</a>
@@ -20,9 +21,23 @@
                 </li>
             </ul>
         </div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn btn-outline-light">Logout</button>
-        </form>
+
+        @guest
+            <div>
+                <a href="{{ route('login') }}" class="btn btn-outline-light">Log in</a>
+                <a href="{{ route('register') }}" class="btn btn-outline-light">Register</a>
+            </div>
+        @endguest
+
+        @auth
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-white">{{ Auth::user()->name }}</span>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-light">Logout</button>
+                </form>
+            </div>
+        @endauth
     </div>
 </nav>

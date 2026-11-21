@@ -37,7 +37,11 @@
                         <th>Subject Title</th>
                         <th class="text-center">Units</th>
                         <th>Category</th>
-                        <th class="text-center">Actions</th>
+
+                        {{-- SS 14 - Hide Actions heading for guests --}}
+                        @auth
+                            <th class="text-center">Actions</th>
+                        @endauth
                     </tr>
                 </thead>
 
@@ -53,28 +57,32 @@
                                     {{ $subject->category->name }}
                                 </span>
                             </td>
-                            <td class="text-center">
-                                <a href="{{ route('subjects.edit', $subject->id) }}"
-                                   class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
 
-                                <form action="{{ route('subjects.destroy', $subject->id) }}"
-                                      method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
+                            {{-- SS 14 - Hide Edit and Delete for guests --}}
+                            @auth
+                                <td class="text-center">
+                                    <a href="{{ route('subjects.edit', $subject->id) }}"
+                                       class="btn btn-warning btn-sm">
+                                        Edit
+                                    </a>
 
-                                    <button type="submit"
-                                            class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Do you want to delete this subject?')">
-                                        Delete
-                                    </button>
-                                </form>
-                            </td>
+                                    <form action="{{ route('subjects.destroy', $subject->id) }}"
+                                          method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Do you want to delete this subject?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            @endauth
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-5">
+                            <td colspan="{{ auth()->check() ? 6 : 5 }}" class="text-center text-muted py-5">
                                 No subjects found.
                             </td>
                         </tr>

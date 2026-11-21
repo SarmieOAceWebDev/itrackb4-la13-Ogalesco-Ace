@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -37,6 +36,15 @@ public function index(Request $request)
 
     return view('subjects.index', compact('subjects', 'sort'));
 }
+
+
+    // ADDED: Create Subject
+    public function create()
+    {
+        $categories = Category::all();
+
+        return view('subjects.create', compact('categories'));
+    }
 
 
     public function store(Request $request)
